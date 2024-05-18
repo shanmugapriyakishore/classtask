@@ -28,3 +28,4 @@ function evaluateExpression() {
     var result = eval(expression);
     document.getElementsByName('display')[0].value = result;
 }
+

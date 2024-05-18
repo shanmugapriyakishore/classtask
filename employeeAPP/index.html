@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employe</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    <div class = "header">
+        <h5>Employe</h5>
+    </div>
+    <div class="upper-btn-box">
+        <div class="left-box">
+            <button id="add-btn"><i class="fa fa-plus"></i> &nbsp;Add Employe</button>
+            <button style="background-color: #33b5E6;"><i class="fa fa-eraser"></i> &nbsp;Clear Filtering</button>
+        </div>
+        <div class="right-box">
+            <i class="fa fa-search"></i>
+            <input type ="text" id="empId" placeholder="Enter Employe id">
+            <button style="background-color: #EE534f ;">Search</button>
+        </div>
+    </div>
+    <div class="table-box">
+    <table >
+        <tr>
+            <th>Sr No</th>
+            <th>Profile</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>E-mail</th>
+            <th>Office Code</th>
+            <th>Job Title</th>
+            <th>Action</th>
+        </tr>   
+        <tbody id="table-data">
+
+        </tbody>  
+    </table>
+
+    </div>
+    <div class="modal ">
+        <i class="fa fa-times-circle close-icon"></i>
+        <div class="left-modal">
+            <div class="img-box">
+                <img src="img/avtar.png"  id= "profile-pic" width="150" height="150" alt="Profile picture">
+                <i class="fa fa-plus"></i>
+                <input type ="file" id="upload-field">
+            </div>
+        </div>
+        <div class="right-modal">
+            <form id="register-form">
+                <div class="input-box">
+                    <label for="id">Id</label>
+                    <input type="text" id="id">
+                    <span id="idError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <label for="name">Name</label>
+                    <input type="text" id="name">
+                    <span id="nameError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <label for="l-name">LastName</label>
+                    <input type="text" id="l-name">
+                    <span id="lNameError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <label for="email">E-mail</label>
+                    <input type="text" id="email">
+                    <span id="emailError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <label for="office-code">Office Code</label>
+                    <input type="text" id="office-code">
+                    <span id="officeCodeError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <label for="job-title">Job Title</label>
+                    <input type="text" id="job-title">
+                    <span id="jobTitleError" class="error-message"></span>
+                </div>
+                <div class="input-box">
+                    <button id="register-btn">Register</button>
+                    <button disabled="disabled" style="background-color: #EE534f;">Update</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="index.js"></script>
+   
+</body>
+</html>
