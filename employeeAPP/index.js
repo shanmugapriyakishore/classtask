@@ -1,4 +1,6 @@
 // start for control coding
+var registerForm = document.querySelector("#register-form");
+var allInput = registerForm.querySelectorAll("INPUT");
 var addBtn = document.querySelector("#add-btn");
 var modal = document.querySelector(".modal");
 var closeBtn = document.querySelector(".close-icon")
@@ -7,6 +9,10 @@ addBtn.onclick =function() {
 };
  closeBtn .addEventListener("click",()=>{
    modal.classList.remove("active")
+   var i;
+   for (i=0;i<allInput.length;i++){
+      allInput[i].value = "";
+   }
  });
 
 // start all the global variables
@@ -20,6 +26,7 @@ var emailEl = document.querySelector("#email")
 var officeEl= document.querySelector("#office-code")
 var JobTitleEl = document.querySelector("#job-title")
 var registerBtn = document.querySelector("#register-btn");
+var updateBtn = document.querySelector("#update-btn");
 var registerForm = document.querySelector("#register-form");
  var imgUrl = "img/avtar.png";
 //  end all the global variables
@@ -144,7 +151,7 @@ const getDataFromLocal = () =>{
         <td>${data.officeCode}</td>
         <td>${data.JobTitle}</td>
         <td>
-          <button>
+          <button class= "edit-btn">
              <i class="fa fa-eye"></i>
          </button>
          <button  class= "del-btn" style="background-color: #EE534f ">
@@ -181,13 +188,53 @@ const getDataFromLocal = () =>{
                     } else {
                       swal("Your imaginary file is safe!");
                     }
-                  });
-                userData.splice(id,1);
-                localStorage.setItem("userData",JSON.stringify(userData));
-                tr.remove();
+                });
+               
             }
         }
-    
+        // start update coding
+         var allEdit = document.querySelectorAll(".edit-btn");
+         for(i=0;i<allEdit.length;i++){
+            allEdit[i].onclick = function(){
+                var tr = this. parentElement.parentElement;
+                var td = tr.getElementsByTagName("td");
+                var index = tr.getAttribute("index")
+                var imgTag = td[1].getElementsByTagName("IMG")
+                var profilePic = imgTag[0].src
+                var id = td[2].innerHTML;
+                var name = td[3].innerHTML;
+                var l_name = td[4].innerHTML;
+                var email = td[5].innerHTML;
+                var officeCode = td[6].innerHTML;
+                var JobTitle= td[7].innerHTML;
+                addBtn.onclick();
+                registerBtn.disabled = true;
+                updateBtn.disabled = false
+                idEl.value = id;
+                nameEl.value= name;
+                l_nameEl.value = l_name;
+                emailEl.value = email;
+                officeEl.value = officeCode;
+                JobTitleEl.value = JobTitle;
+                profile_pic .src = profilePic;
+                updateBtn.onclick = function (){
+                    userData[index] ={
+                        id: idEl.value,
+                        name:nameEl.value,
+                        l_name:l_nameEl.value,
+                        email:emailEl.value,
+                        officeCode:officeEl.value,
+                        JobTitle:JobTitleEl.value,
+                        profilePic: uploadPic.value == "" ?   profile_pic .src: imgUrl,
+                
+                    }
+                    localStorage.setItem("userData",JSON.stringify(userData));
+                }
+
+
+                
+            }
+         }
     }
     getDataFromLocal();
 
@@ -209,3 +256,65 @@ uploadPic.onchange = function() {
         alert("File Size Is Too Large");
     }
 }
+
+// start search coding
+var searchEl = document.querySelector("#empId");
+searchEl.oninput = function(){
+    searchFuc();
+}
+
+function searchFuc() {
+    var tr = tableData.querySelectorAll("tr");
+    var filter = searchEl.value.toLowerCase();
+    
+    for (var i = 0; i < tr.length; i++) {
+        var tds = tr[i].getElementsByTagName("td");
+
+        if (tds.length >= 6) { // Check if there are enough td elements to avoid errors
+            var id = tds[2].innerHTML;
+            var name = tds[3].innerHTML;
+            var l_name = tds[4].innerHTML;
+            var email = tds[5].innerHTML;
+
+            // Check if any of the fields contain the filter text
+            if (id.toLowerCase().indexOf(filter) > -1 ||
+                name.toLowerCase().indexOf(filter) > -1 ||
+                l_name.toLowerCase().indexOf(filter) > -1 ||
+                email.toLowerCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+// start clear coding
+var delAllBtn = document.querySelector("#del-all-btn");
+var allDelBox = document.querySelector("#del-all-box");
+console.log(allDelBox)
+delAllBtn.addEventListener('click',()=>{
+    if(allDelBox.checked == true){
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                localStorage.removeItem("userData");
+                window.location = location.href;
+              swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+              });
+            } else {
+              swal("Your imaginary file is safe!");
+            }
+          });
+    }
+    else{
+        swal("Check The Box", "Please check the box to delete data", "warning");
+    }
+})
